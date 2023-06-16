@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, request, session
+from supabase import create_client
 import requests
 from dotenv import load_dotenv
 import os
@@ -14,6 +15,11 @@ client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 redirect_uri = os.getenv("REDIRECT_URI")
 app.secret_key = os.getenv("SECRET_KEY")
+
+supabase_url = os.getenv('SUPABASE_PROJECT_URL')
+supabase_key = os.getenv('SUPABASE_ANON_API_KEY')
+
+Client = create_client(supabase_url, supabase_key)
 scope = 'user-library-read'
 
 
