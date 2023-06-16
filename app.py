@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect, request, session
-from supabase import create_client
 import requests
 from dotenv import load_dotenv
 import os
@@ -16,10 +15,6 @@ client_secret = os.getenv("CLIENT_SECRET")
 redirect_uri = os.getenv("REDIRECT_URI")
 app.secret_key = os.getenv("SECRET_KEY")
 
-supabase_url = os.getenv('SUPABASE_PROJECT_URL')
-supabase_key = os.getenv('SUPABASE_ANON_API_KEY')
-
-Client = create_client(supabase_url, supabase_key)
 scope = 'user-library-read'
 
 
@@ -92,15 +87,16 @@ def callback():
                 album_info = api_data.json()
                 get_album_names(album_info)
 
-            for x in range(3): # shuffle list of album names 3 times for extra randomization
+            for x in range(3):  # shuffle list of album names 3 times for extra randomization
                 random.shuffle(album_names)
 
-            list_index = random.randrange(len(album_names) - 1) # get random index value
-            album_to_listen_to = album_names[list_index] # get album 
+            list_index = random.randrange(
+                len(album_names) - 1)  # get random index value
+            album_to_listen_to = album_names[list_index]  # get album
 
-            return album_to_listen_to + ' was chosen. Listen to now?'
+            return album_to_listen_to + ' was chosen.'
 
-        else: 
+        else:
             return 'error'
 
 
@@ -134,4 +130,4 @@ def refresh_token():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=8000)
