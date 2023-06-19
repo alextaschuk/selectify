@@ -130,4 +130,4 @@ def refresh_token():
 
 
 if __name__ == '__main__':
-    app.run(port=8000)
+    app.run(host='192.168.4.92', port=80)
