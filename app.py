@@ -17,7 +17,6 @@ app.secret_key = os.getenv("SECRET_KEY")
 
 scope = 'user-library-read'
 
-
 def generateRandomString(length):
     text = ''
     possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -99,7 +98,6 @@ def callback():
         else:
             return 'error'
 
-
 @app.route('/refresh_token')
 def refresh_token():
     credentials = f"{client_id}:{client_secret}"
@@ -127,7 +125,6 @@ def refresh_token():
         return 'New Access Token: ' + str(new_access_token)
     else:
         return 'Could not generate new access token.'
-
 
 if __name__ == '__main__':
     app.run(host='192.168.4.92', port=80)
