@@ -8,34 +8,23 @@ h1 {
     font-size: 50px;
 }
 
-h2 {
-    color: #333333;
-    text-align: center;
-    font-size: 35px;
-}
-
 .content {
     padding-top: 70px;
 }
 
-/* custom.css */
-/* Define your custom styles here */
-
 /* Dropdown menu background color */
 .dropdown-menu {
     background-color: #f7f7f7;
-    max-width: 100px;;
-    /* Replace with your desired background color */
+    max-width: 100px;
+    ;
 }
 
 /* Dropdown link text color */
 .dropdown-item {
     color: #333333;
-    /* Replace with your desired text color */
 }
 
 /* Dropdown link text color on hover */
 .dropdown-item:hover {
     background-color: #efefef;
-    /* Replace with your desired text color on hover */
 }
