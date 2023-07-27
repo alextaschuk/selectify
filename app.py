@@ -127,4 +127,4 @@ def refresh_token():
         return 'Could not generate new access token.'
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='10.0.0.248', debug=True)
