@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-<link rel="stylesheet" type="text/css" href="/static/styles.css">
-<head>
-    <title>Selectify- A Spotify Album Selector</title>
-</head>
-<body>
-    <h1> Selectify</h1>
-    <h2> A Random Album Selector for Spotify</h2>
-    <dix class="buttonContainer">
-    <a class="loginButton" href="/login">Log in with Spotify </a>
+{% extends "base.html" %}
+{% block title %}Selectify- Album Selector{% endblock %}
 
-</body>
-</html>
+{%block content%}
+<link rel="stylesheet" type="text/css" href="/static/styles.css">
+<h1>A Random Album Selector for Spotify</h1>
+<div class="buttonContainer">
+    <a class="loginButton" href="/login">Log in with Spotify </a>
+</div>
+{%endblock%}

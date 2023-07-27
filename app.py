@@ -41,7 +41,7 @@ def callback():
     stored_state = session.get('stored_state')
 
     if state == None or state != stored_state:
-        print('Didnt work')
+        print('Erorr. Security Check Failed. Please try logging in again by clicking the login button.')
         return render_template('index.html')
     else:
         credentials = f"{client_id}:{client_secret}"
@@ -127,4 +127,4 @@ def refresh_token():
         return 'Could not generate new access token.'
 
 if __name__ == '__main__':
-    app.run(host='10.0.0.248', debug=True)
+    app.run(host='10.0.0.130', debug=True)
