@@ -1,7 +1,3 @@
-body {
-    background-color: #f5f5dc;
-}
-
 h2 {
     color: #333333;
     text-align: center;
@@ -23,6 +19,8 @@ h2 {
 .loginButton:hover {
     background-color: #556B2F;
     transition: 0.4s;
+    text-decoration: none;
+    color: white;
 }
 
 .buttonContainer {
