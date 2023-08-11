@@ -36,19 +36,15 @@ def login():
 
 @app.route('/callback', methods=['GET', 'POST'])
 def callback():
+    auth_code = request.args.get('code', None)
     state = request.args.get('state', None)
     stored_state = session.get('stored_state')
 
     if state == None or state != stored_state:
-        print('Erorr. Security Check Failed. Please try logging in again by clicking the login button.')
+        print('Error. Security Check Failed. Please try logging in again by clicking the login button.')
         return render_template('index.html')
     else:
-        return render_template('album-selector.html')
-
-@app.route('/album-selector', methods=['GET', 'POST'])
-def albumSelector():
-    auth_code = request.args.get('code', None)
-    credentials = f"{client_id}:{client_secret}"
+         credentials = f"{client_id}:{client_secret}"
     base64_credentials = base64.b64encode(
         credentials.encode("utf-8")).decode("utf-8")
     url = 'https://accounts.spotify.com/api/token'
@@ -97,11 +93,11 @@ def albumSelector():
             len(album_names) - 1)  # get random index value
         album_to_listen_to = album_names[list_index]  # get album
 
-        return render_template("albumSelector.html")
+        return render_template("callback.html", album_to_listen_to=album_to_listen_to)
 
     else:
-        return 'error'
-
+        return get_access_token.status_code
+    
 @app.route('/refresh_token')
 def refresh_token():
     credentials = f"{client_id}:{client_secret}"
@@ -131,4 +127,4 @@ def refresh_token():
         return 'Could not generate new access token.'
 
 if __name__ == '__main__':
-    app.run(host='10.0.0.248', debug=True)
+    app.run(host='10.0.0.248', port=5000, debug=True)
