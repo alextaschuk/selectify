@@ -36,7 +36,6 @@ def login():
 
 @app.route('/callback', methods=['GET', 'POST'])
 def callback():
-    auth_code = request.args.get('code', None)
     state = request.args.get('state', None)
     stored_state = session.get('stored_state')
 
@@ -44,59 +43,64 @@ def callback():
         print('Erorr. Security Check Failed. Please try logging in again by clicking the login button.')
         return render_template('index.html')
     else:
-        credentials = f"{client_id}:{client_secret}"
-        base64_credentials = base64.b64encode(
-            credentials.encode("utf-8")).decode("utf-8")
-        url = 'https://accounts.spotify.com/api/token'
-        data = {
-            'code': auth_code,
-            'redirect_uri': redirect_uri,
-            'grant_type': 'authorization_code'
-        }
+        return render_template('album-selector.html')
+
+@app.route('/album-selector', methods=['GET', 'POST'])
+def albumSelector():
+    auth_code = request.args.get('code', None)
+    credentials = f"{client_id}:{client_secret}"
+    base64_credentials = base64.b64encode(
+        credentials.encode("utf-8")).decode("utf-8")
+    url = 'https://accounts.spotify.com/api/token'
+    data = {
+        'code': auth_code,
+        'redirect_uri': redirect_uri,
+        'grant_type': 'authorization_code'
+    }
+    headers = {
+        'Authorization': f'Basic {base64_credentials}',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    get_access_token = requests.post(url, data=data, headers=headers)
+
+    if get_access_token.status_code == 200:
+        access_token_data = get_access_token.json()
+        access_token = access_token_data['access_token']
+        scope = access_token_data['scope']
+        refresh_token = access_token_data['refresh_token']
+
+        def get_album_names(album_info):
+            for item in album_info['items']:
+                album = item['album']
+                album_names.append(album['name'])
+
+        url = 'https://api.spotify.com/v1/me/albums?limit=25'
         headers = {
-            'Authorization': f'Basic {base64_credentials}',
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Authorization': 'Bearer ' + str(access_token)
         }
-        get_access_token = requests.post(url, data=data, headers=headers)
+        api_data = requests.get(url, headers=headers)
 
-        if get_access_token.status_code == 200:
-            access_token_data = get_access_token.json()
-            access_token = access_token_data['access_token']
-            scope = access_token_data['scope']
-            refresh_token = access_token_data['refresh_token']
+        album_info = api_data.json()
+        album_names = []
+        get_album_names(album_info)
 
-            def get_album_names(album_info):
-                for item in album_info['items']:
-                    album = item['album']
-                    album_names.append(album['name'])
-
-            url = 'https://api.spotify.com/v1/me/albums?limit=25'
-            headers = {
-                'Authorization': 'Bearer ' + str(access_token)
-            }
+        while album_info['next']:
+            url = album_info['next']
             api_data = requests.get(url, headers=headers)
-
             album_info = api_data.json()
-            album_names = []
             get_album_names(album_info)
 
-            while album_info['next']:
-                url = album_info['next']
-                api_data = requests.get(url, headers=headers)
-                album_info = api_data.json()
-                get_album_names(album_info)
+        for x in range(3):  # shuffle list of album names 3 times for extra randomization
+            random.shuffle(album_names)
 
-            for x in range(3):  # shuffle list of album names 3 times for extra randomization
-                random.shuffle(album_names)
+        list_index = random.randrange(
+            len(album_names) - 1)  # get random index value
+        album_to_listen_to = album_names[list_index]  # get album
 
-            list_index = random.randrange(
-                len(album_names) - 1)  # get random index value
-            album_to_listen_to = album_names[list_index]  # get album
+        return render_template("albumSelector.html")
 
-            return album_to_listen_to + ' was chosen.'
-
-        else:
-            return 'error'
+    else:
+        return 'error'
 
 @app.route('/refresh_token')
 def refresh_token():
