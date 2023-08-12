@@ -3,5 +3,10 @@
 
 {%block content%}
 <link rel="stylesheet" type="text/css" href="/static/styles.css">
-<h2> <div>{{ album_to_listen_to }}</div> was chosen.</h2>
+<body>
+    <div>{{ album_to_listen_to }}</div> was chosen.
+    <div class="buttonContainer">
+        <a class="loginButton" href="/callback">Get Random Album</a>
+    </div>
+</body>
 {%endblock%}
