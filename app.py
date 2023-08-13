@@ -76,15 +76,15 @@ def callback():
         }
         api_data = requests.get(url, headers=headers)
 
-        album_info = api_data.json()
-        album_names = []
-        get_album_names(album_info)
+        album_info = api_data.json() # why is this also called twice? First here
+        album_names = [] 
+        get_album_names(album_info) # why is this called twice? First here
 
         while album_info['next']:
             url = album_info['next']
             api_data = requests.get(url, headers=headers)
-            album_info = api_data.json()
-            get_album_names(album_info)
+            album_info = api_data.json() # then here
+            get_album_names(album_info) # then here
 
         for x in range(3):  # shuffle list of album names 3 times for extra randomization
             random.shuffle(album_names)
