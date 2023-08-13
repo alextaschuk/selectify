@@ -5,7 +5,6 @@ h2 {
     margin: auto;
     padding: auto;
     display: flex;
-    justify-content: center;
 }
 
 body {
@@ -15,7 +14,6 @@ body {
     margin: auto;
     padding: auto;
     display: flex;
-    justify-content: center;
 }
 
 .loginButton {
