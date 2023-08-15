@@ -68,6 +68,8 @@ def callback():
         def get_album_names(album_info):
             for item in album_info['items']:
                 album = item['album']
+                album_image = album['images']
+                album_cover_url.append(album_image['url'])
                 album_names.append(album['name'])
 
         url = 'https://api.spotify.com/v1/me/albums?limit=25'
@@ -76,24 +78,26 @@ def callback():
         }
         api_data = requests.get(url, headers=headers)
 
-        album_info = api_data.json() # why is this also called twice? First here
-        album_names = [] 
-        get_album_names(album_info) # why is this called twice? First here
+        album_info = api_data.json() 
+        album_names = []
+        album_cover_url = []
+        get_album_names(album_info)
 
         while album_info['next']:
             url = album_info['next']
             api_data = requests.get(url, headers=headers)
-            album_info = api_data.json() # then here
-            get_album_names(album_info) # then here
+            album_info = api_data.json()
+            get_album_names(album_info)
 
         for x in range(3):  # shuffle list of album names 3 times for extra randomization
             random.shuffle(album_names)
 
-        list_index = random.randrange(
-            len(album_names) - 1)  # get random index value
+        list_index = random.randrange(len(album_names) - 1)  # get random index value
         album_to_listen_to = album_names[list_index]  # get album
+        album_cover_picture = album_cover_url[list_index]
 
-        return render_template("callback.html", album_to_listen_to=album_to_listen_to)
+
+        return render_template("callback.html", album_to_listen_to=album_to_listen_to, album_cover_picture=album_cover_picture)
 
     else:
         return get_access_token.status_code
