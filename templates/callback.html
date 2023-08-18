@@ -4,7 +4,11 @@
 {%block content%}
 <link rel="stylesheet" type="text/css" href="/static/styles.css">
 <body>
-    <img src="{{album_cover_picture }}">
-    <div class="album-selection">{{ album_to_listen_to }} was chosen.</div> 
+    <div class="oEmbed-center buttonContainer">
+        <iframe src="https://open.spotify.com/embed/album/{{ uri }}" class="oEmbed-center" width="600" height="400" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    </div>
+    <div class="buttonContainer bottom-centered">
+        <a class="button" href="{{ selected_uri}}">Listen on Spotify</a>
+    </div>
 </body>
 {%endblock%}

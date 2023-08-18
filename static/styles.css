@@ -10,7 +10,7 @@ h2 {
     font-size: 20px;
 }
 
-.loginButton {
+.button {
     border: black;
     background-color: #808000;
     color: white;
@@ -22,7 +22,7 @@ h2 {
     border-radius: 12px;
 }
 
-.loginButton:hover {
+.button:hover {
     background-color: #556B2F;
     transition: 0.4s;
     text-decoration: none;
@@ -33,4 +33,12 @@ h2 {
     display: flex;
     justify-content: center;
     margin-top: 30px;
+}
+
+.buttonContainer.bottom-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; 
+    margin-top: 15px;
 }

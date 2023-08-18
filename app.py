@@ -65,12 +65,9 @@ def callback():
         scope = access_token_data['scope']
         refresh_token = access_token_data['refresh_token']
 
-        def get_album_names(album_info):
+        def get_album_uri(album_info):
             for item in album_info['items']:
-                album = item['album']
-                album_image = album['images']
-                album_cover_url.append(album_image['url'])
-                album_names.append(album['name'])
+                album_uri.append(item['album']['uri'])
 
         url = 'https://api.spotify.com/v1/me/albums?limit=25'
         headers = {
@@ -79,25 +76,21 @@ def callback():
         api_data = requests.get(url, headers=headers)
 
         album_info = api_data.json() 
-        album_names = []
-        album_cover_url = []
-        get_album_names(album_info)
+        album_uri = []
+        get_album_uri(album_info)
 
         while album_info['next']:
             url = album_info['next']
             api_data = requests.get(url, headers=headers)
             album_info = api_data.json()
-            get_album_names(album_info)
+            get_album_uri(album_info)
 
-        for x in range(3):  # shuffle list of album names 3 times for extra randomization
-            random.shuffle(album_names)
+        list_index = random.randrange(len(album_uri) - 1)  # get random index value
+        selected_uri = album_uri[list_index]  # get uri of selected album
+        split = selected_uri.split(':') # split album uri string up
+        uri = split[-1] # only keep the album's id and remove "spotify:album:"
 
-        list_index = random.randrange(len(album_names) - 1)  # get random index value
-        album_to_listen_to = album_names[list_index]  # get album
-        album_cover_picture = album_cover_url[list_index]
-
-
-        return render_template("callback.html", album_to_listen_to=album_to_listen_to, album_cover_picture=album_cover_picture)
+        return render_template("callback.html", selected_uri=selected_uri, uri=uri)
 
     else:
         return get_access_token.status_code
@@ -131,4 +124,4 @@ def refresh_token():
         return 'Could not generate new access token.'
 
 if __name__ == '__main__':
-    app.run(host='10.0.0.248', port=5000, debug=True)
+    app.run(host='10.0.0.130', port=5000, debug=True)
