@@ -95,6 +95,14 @@ def callback():
     else:
         return get_access_token.status_code
     
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/remove-access')
+def removeAccess():
+    return render_template('remove-access.html')
+    
 @app.route('/refresh_token')
 def refresh_token():
     credentials = f"{client_id}:{client_secret}"
