@@ -1,0 +1,15 @@
+To start website:
+1. Start venv: cd to selectify then run `source venv/bin/activate`
+2. Start gunicorn server: 
+    1. `sudo systemctl start app`
+    2. `sudo systemctl enable app`
+    3. `sudo systemctl status app`                                
+3. Start nginx reverse proxy: ` sudo systemctl start nginx
+
+To stop website:
+1. Stop gunicorn: ctrl + c
+2. `sudo systemctl stop app`
+3. Stop nginx: `sudo systemctl stop nginx` 
+
+If public ip changes:
+1. Update google domain dns custom records
