@@ -1,6 +1,6 @@
-# Selectify- A Random Album Selector for Spotify
+# [Selectify](albumselector.com)- A Random Album Selector for Spotify
 
-**Log in with Spotify and have am album from your saved albums list chosen at random for you to listen to**
+## Log in with Spotify and have an album from your saved albums list be chosen at random for you to listen to
 
 This summer (2023), I wanted to teach myself Python and complete a project that would have a real-life application to gain a better understanding of fullstack development. As a result, Selectify was created.
 
