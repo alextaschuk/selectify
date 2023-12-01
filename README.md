@@ -1,4 +1,4 @@
-# [Selectify](albumselector.com)- A Random Album Selector for Spotify
+# [Selectify](https://albumselector.com)- A Random Album Selector for Spotify
 
 ## Log in with Spotify and have an album from your saved albums list be chosen at random for you to listen to
 
